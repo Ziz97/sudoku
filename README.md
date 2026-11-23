@@ -2,6 +2,8 @@
 
 A Sudoku game that runs in the browser. It is plain HTML, CSS and JavaScript, with no build step.
 
+**Play it here: https://ziz97.github.io/sudoku/**
+
 ## Features
 
 - **Play mode**: new puzzles in four levels (Easy, Medium, Hard, Expert), each with exactly one solution. Mistakes are shown in red (you can turn this off), plus notes, undo, hints, a timer and pause.
