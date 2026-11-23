@@ -65,6 +65,10 @@
         </div>
 
         <div id="setup-controls" class="panel-block" hidden>
+          <button id="setup-import-btn" class="btn import-btn">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M9 3 7.17 5H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.17L15 3H9zm3 15a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+            Import from a picture
+          </button>
           <button id="setup-start-btn" class="btn primary">Start playing this grid</button>
           <div class="btn-row">
             <button id="setup-clear-btn" class="btn">Clear grid</button>
@@ -123,9 +127,62 @@
     </form>
   </dialog>
 
+  <dialog id="import-dialog" class="import-dialog" aria-labelledby="import-title">
+    <div class="import-card">
+      <header class="import-head">
+        <h2 id="import-title">Import a grid from a picture</h2>
+        <button type="button" class="icon-btn small" id="import-close" aria-label="Close">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M18.3 5.7 12 12l6.3 6.3-1.4 1.4L10.6 13.4 4.3 19.7l-1.4-1.4L9.2 12 2.9 5.7l1.4-1.4 6.3 6.3 6.3-6.3z"/></svg>
+        </button>
+      </header>
+
+      <section class="import-step" data-step="pick">
+        <div class="dropzone" id="dropzone">
+          <svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><path fill="currentColor" d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 16H5V5h14v14zm-5.04-6.71-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
+          <p class="dz-title">Drop a photo or screenshot here</p>
+          <p class="dz-sub">or paste it with <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>V</kbd></p>
+          <div class="dz-buttons">
+            <label class="btn primary">Choose a picture<input type="file" id="import-file" accept="image/*" hidden /></label>
+            <label class="btn" id="import-camera-label">Take a photo<input type="file" id="import-camera" accept="image/*" capture="environment" hidden /></label>
+          </div>
+        </div>
+        <p class="import-note">Works best with printed grids and screenshots, not handwriting. Keep the whole grid in frame, flat and sharp. Your picture stays on your device.</p>
+      </section>
+
+      <section class="import-step" data-step="adjust" hidden>
+        <p class="step-text" id="adjust-text"></p>
+        <div class="adjust-wrap" id="adjust-wrap"><canvas id="adjust-canvas"></canvas></div>
+        <div class="import-actions">
+          <button type="button" class="btn" id="import-back">Other picture</button>
+          <button type="button" class="btn primary" id="import-read">Read the numbers</button>
+        </div>
+      </section>
+
+      <section class="import-step busy" data-step="busy" hidden>
+        <div class="spinner" aria-hidden="true"></div>
+        <p>Reading the numbers…</p>
+      </section>
+
+      <section class="import-step" data-step="review" hidden>
+        <p class="step-text" id="review-text"></p>
+        <div class="review-grids">
+          <figure><canvas id="review-photo"></canvas><figcaption>Your picture</figcaption></figure>
+          <figure><canvas id="review-read"></canvas><figcaption>What was read</figcaption></figure>
+        </div>
+        <p class="import-note" id="review-legend"></p>
+        <div class="import-actions">
+          <button type="button" class="btn" id="import-readjust">Adjust the corners</button>
+          <button type="button" class="btn primary" id="import-use">Use this grid</button>
+        </div>
+      </section>
+    </div>
+  </dialog>
+
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script src="js/sudoku.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/grid-reader.js"></script>
+  <script src="js/import-ui.js"></script>
 </body>
 </html>

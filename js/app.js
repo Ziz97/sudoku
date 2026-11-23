@@ -540,7 +540,7 @@
     $('setup-cancel-btn').addEventListener('click', leaveSetup);
 
     document.addEventListener('keydown', (e) => {
-      if (modalEl.open) return;
+      if (document.querySelector('dialog[open]')) return;
       const tag = e.target.tagName;
       if (tag === 'SELECT' || tag === 'INPUT') return;
 
@@ -572,6 +572,24 @@
     window.addEventListener('pagehide', save);
     window.addEventListener('beforeunload', save);
   }
+
+  // ---------- Public API (used by the picture import) ----------
+  window.SudokuApp = {
+    toast,
+    /** Loads clues into setup mode. Undo brings back the previous setup grid. */
+    importGrid(values) {
+      if (!isSetup()) {
+        state.mode = 'setup';
+        state.paused = false;
+        state.notesMode = false;
+      }
+      pushHistory();
+      state.setup.values = values.slice();
+      state.selected = 0;
+      commit();
+      toast('Grid imported. Check it, fix anything if needed, then start playing.');
+    },
+  };
 
   // ---------- Init ----------
   buildBoard();
